@@ -74,6 +74,8 @@ app.post('/api/posts', upload.single('image'), async (req, res) => {
     const { title, content } = req.body;
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : '';
     
+    console.log('Creating post:', { title, content, imageUrl });
+    
     const post = new Post({
       title,
       content,
@@ -81,8 +83,10 @@ app.post('/api/posts', upload.single('image'), async (req, res) => {
     });
 
     const savedPost = await post.save();
+    console.log('Post saved to MongoDB:', savedPost);
     res.status(201).json(savedPost);
   } catch (error) {
+    console.error('Error creating post:', error);
     res.status(400).json({ message: error.message });
   }
 });
