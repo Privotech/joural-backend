@@ -20,6 +20,12 @@ mongoose.connect(MONGODB_URI)
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
 
+// Import routes
+const authRoutes = require('./routes/auth');
+
+// Use routes
+app.use('/api/auth', authRoutes);
+
 // Post Schema
 const postSchema = new mongoose.Schema({
   title: { type: String, required: true },
